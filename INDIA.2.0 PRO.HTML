@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>RAM AI</title>
+
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    background: #0f172a;
+    color: white;
+}
+
+h1 {
+    color: orange;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+}
+
+button {
+    padding: 10px;
+    background: orange;
+    border: none;
+    cursor: pointer;
+}
+
+#chatbox {
+    width: 60%;
+    height: 200px;
+    margin: auto;
+    border: 2px solid orange;
+    overflow-y: scroll;
+    padding: 10px;
+    background: #1e293b;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🧠 RAM AI</h1>
+
+<div class="container">
+    <input id="name" placeholder="Enter Name"><br>
+    <input id="age" placeholder="Enter Age"><br>
+    <input id="habit" placeholder="Habits (good/bad)"><br>
+
+    <button onclick="generateReport()">Submit</button>
+</div>
+
+<br>
+
+<div id="chatbox"></div>
+
+<script>
+
+function generateReport() {
+
+    let name = document.getElementById("name").value;
+    let age = document.getElementById("age").value;
+    let habit = document.getElementById("habit").value;
+
+    let score = 50;
+
+    if (habit.toLowerCase().includes("good")) score += 30;
+    if (habit.toLowerCase().includes("bad")) score -= 20;
+
+    let advice = "Maintain a balanced lifestyle.";
+
+    if (score > 70) advice = "Great lifestyle! Keep it up.";
+    else if (score < 40) advice = "You need to improve your habits.";
+
+    // Open new page (certificate)
+    let newPage = window.open("", "_blank");
+
+    newPage.document.write(`
+    <html>
+    <head>
+    <title>Life Certificate</title>
+    <style>
+    body { font-family: Arial; text-align:center; }
+    h2 { color: green; }
+    </style>
+    </head>
+    <body>
+
+    <h2>📜 LIFE REPORT CERTIFICATE</h2>
+
+    <p><b>Name:</b> ${name}</p>
+    <p><b>Age:</b> ${age}</p>
+    <p><b>Wellness Score:</b> ${score}/100</p>
+
+    <p><b>Advice:</b> ${advice}</p>
+
+    <br><br>
+
+    <p><b>Developer:</b><br>
+    ASHUTOSH KUMAR,<br>
+    A STUDENT OF GURUKUOL SENOIR SECONDARY SCHOOL</p>
+
+    <br><br>
+
+    <button onclick="window.print()">🖨 Print Certificate</button>
+
+    </body>
+    </html>
+    `);
+}
+
+// Simple chatbot
+function send(msg) {
+    let chat = document.getElementById("chatbox");
+
+    chat.innerHTML += "<p><b>You:</b> " + msg + "</p>";
+
+    let reply = "I can guide you in life, maths, and motivation.";
+
+    if (msg.includes("+") || msg.includes("-")) {
+        try { reply = "Answer: " + eval(msg); } catch {}
+    }
+
+    chat.innerHTML += "<p><b>RAM AI:</b> " + reply + "</p>";
+}
+</script>
+
+</body>
+</html>
